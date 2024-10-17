@@ -1,0 +1,22 @@
+class Vehicle:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.speed = 5
+
+    def move(self, traffic_light):
+        if traffic_light.state == "GREEN":
+            self.x += self.speed
+        elif traffic_light.state == "RED" and self.x < traffic_light.x:
+            self.x = max(self.x, traffic_light.x - 10)  # Stop near the light
+
+    def draw(self, screen):
+        pygame.draw.rect(screen, (0, 0, 255), (self.x, self.y, 40, 20))
+
+# Inside main loop:
+vehicle = Vehicle(100, 300)
+
+while running:
+    # Move and draw vehicle
+    vehicle.move(traffic_light)
+    vehicle.draw(screen)
