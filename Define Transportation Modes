@@ -1,0 +1,8 @@
+# Define transportation modes with average speeds (in km/h)
+transport_modes = {
+    'bus': 40,       # 40 km/h
+    'train': 80,     # 80 km/h
+    'bike': 15,      # 15 km/h
+    'walk': 5,       # 5 km/h
+    'car': 60        # 60 km/h
+}
