@@ -1,0 +1,32 @@
+# Parameters for the road
+road_length = 1000  # Total length of the road (in meters)
+segment_start = 400  # Start of the road segment to calculate density (in meters)
+segment_end = 600    # End of the road segment (in meters)
+segment_length = segment_end - segment_start
+
+# Simulation function to calculate traffic density
+def calculate_traffic_density(vehicles, segment_start, segment_end):
+    count_in_segment = 0
+    for vehicle in vehicles:
+        if segment_start <= vehicle.position <= segment_end:
+            count_in_segment += 1
+    # Calculate density: number of vehicles per segment length
+    density = count_in_segment / segment_length
+    return count_in_segment, density
+
+# Run the simulation for a number of steps
+for step in range(20):
+    # Move all vehicles
+    for vehicle in vehicles:
+        vehicle.move()
+    
+    # Calculate traffic density in the specified road segment
+    vehicle_count, density = calculate_traffic_density(vehicles, segment_start, segment_end)
+    
+    # Display results
+    print(f"Step {step+1}:")
+    print(f"Number of vehicles in the segment: {vehicle_count}")
+    print(f"Traffic density: {density:.4f} vehicles per meter")
+    
+    # Pause to simulate time steps
+    time.sleep(1)
