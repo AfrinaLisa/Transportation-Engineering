@@ -1,0 +1,14 @@
+import random
+import time
+
+class Vehicle:
+    def __init__(self, id, position=0, speed=1):
+        self.id = id
+        self.position = position  # Starting position of the vehicle on the road
+        self.speed = speed  # Speed of the vehicle (units per time step)
+
+    def move(self):
+        self.position += self.speed  # Vehicle moves based on its speed
+
+# Create a list of vehicles with random speeds
+vehicles = [Vehicle(id=i, speed=random.uniform(0.5, 2.5)) for i in range(10)]
