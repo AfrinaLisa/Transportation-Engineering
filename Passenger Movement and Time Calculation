@@ -1,0 +1,18 @@
+# Function to calculate travel time
+def calculate_travel_time(distance, mode):
+    speed = transport_modes[mode]  # Get speed for the chosen mode
+    return distance / speed  # Time = Distance / Speed
+
+# Function to calculate total travel time between two cities using a specific mode
+def total_travel_time(city_from, city_to, mode):
+    if G.has_edge(city_from, city_to):
+        distance = G[city_from][city_to]['distance']
+        time = calculate_travel_time(distance, mode)
+        print(f"Travel from {city_from} to {city_to} by {mode}: {time:.2f} hours")
+        return time
+    else:
+        print(f"No direct route between {city_from} and {city_to}.")
+        return None
+
+# Example: Calculate travel time between City A and City B using a bus
+total_travel_time('City A', 'City B', 'bus')
