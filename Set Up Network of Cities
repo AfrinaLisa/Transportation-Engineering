@@ -1,0 +1,22 @@
+import networkx as nx
+import matplotlib.pyplot as plt
+
+# Create a transportation network
+G = nx.Graph()
+
+# Add nodes (cities or locations)
+G.add_nodes_from(['City A', 'City B', 'City C', 'City D', 'City E'])
+
+# Add edges (routes) between cities with distance in km
+G.add_edge('City A', 'City B', distance=50)  # 50 km
+G.add_edge('City B', 'City C', distance=80)  # 80 km
+G.add_edge('City A', 'City D', distance=100)  # 100 km
+G.add_edge('City C', 'City D', distance=40)  # 40 km
+G.add_edge('City D', 'City E', distance=120)  # 120 km
+
+# Visualize the transportation network
+pos = nx.spring_layout(G)
+nx.draw(G, pos, with_labels=True, node_color='skyblue', node_size=2000, font_size=15, font_weight='bold')
+labels = nx.get_edge_attributes(G, 'distance')
+nx.draw_networkx_edge_labels(G, pos, edge_labels=labels)
+plt.show()
