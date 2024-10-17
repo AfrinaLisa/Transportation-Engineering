@@ -1,0 +1,25 @@
+def main():
+    clock = pygame.time.Clock()
+    traffic_light = TrafficLight(275, 200)
+
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+        # Fill background
+        screen.fill(WHITE)
+
+        # Update and draw traffic light
+        traffic_light.update_light()
+        traffic_light.draw(screen)
+
+        # Refresh the screen
+        pygame.display.update()
+        clock.tick(60)
+
+    pygame.quit()
+
+if __name__ == "__main__":
+    main()
