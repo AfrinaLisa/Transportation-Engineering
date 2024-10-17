@@ -1,0 +1,15 @@
+import pygame
+import time
+
+pygame.init()
+
+# Screen settings
+screen = pygame.display.set_mode((600, 600))
+pygame.display.set_caption("Traffic Control System")
+
+# Colors for traffic lights
+RED = (255, 0, 0)
+YELLOW = (255, 255, 0)
+GREEN = (0, 255, 0)
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
