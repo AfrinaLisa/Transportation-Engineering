@@ -1,0 +1,31 @@
+class TrafficLight:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.color = RED
+        self.state = "RED"
+        self.time_red = 5
+        self.time_yellow = 2
+        self.time_green = 5
+        self.last_switch_time = time.time()
+    
+    def update_light(self):
+        current_time = time.time()
+        time_elapsed = current_time - self.last_switch_time
+
+        if self.state == "RED" and time_elapsed >= self.time_red:
+            self.state = "GREEN"
+            self.color = GREEN
+            self.last_switch_time = current_time
+        elif self.state == "GREEN" and time_elapsed >= self.time_green:
+            self.state = "YELLOW"
+            self.color = YELLOW
+            self.last_switch_time = current_time
+        elif self.state == "YELLOW" and time_elapsed >= self.time_yellow:
+            self.state = "RED"
+            self.color = RED
+            self.last_switch_time = current_time
+
+    def draw(self, screen):
+        pygame.draw.rect(screen, BLACK, (self.x, self.y, 50, 150))
+        pygame.draw.circle(screen, self.color, (self.x + 25, self.y + 75), 20)
