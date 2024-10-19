@@ -1,0 +1,50 @@
+import time
+
+class MetroTrain:
+    def __init__(self, max_speed, acceleration_rate, deceleration_rate):
+        self.current_speed = 0.0  # Speed in km/h
+        self.max_speed = max_speed  # Max allowable speed in km/h
+        self.acceleration_rate = acceleration_rate  # Acceleration in km/h per second
+        self.deceleration_rate = deceleration_rate  # Deceleration in km/h per second
+        self.distance_covered = 0.0  # Distance covered in km
+        self.station_distance = 1.0  # Distance to next station in km
+
+    def accelerate(self):
+        """Increase the speed of the train until it reaches the maximum speed."""
+        while self.current_speed < self.max_speed:
+            self.current_speed += self.acceleration_rate
+            self.distance_covered += self.current_speed / 3600  # Distance in km per second
+            print(f"Accelerating... Speed: {self.current_speed:.2f} km/h, Distance covered: {self.distance_covered:.2f} km")
+            time.sleep(1)  # Simulate time passing in seconds
+            if self.distance_covered >= self.station_distance - 0.3:  # Start slowing down 300 meters before the station
+                self.decelerate()
+                break
+
+    def decelerate(self):
+        """Decrease the speed of the train as it approaches a station."""
+        while self.current_speed > 0:
+            self.current_speed -= self.deceleration_rate
+            self.distance_covered += self.current_speed / 3600  # Distance in km per second
+            print(f"Decelerating... Speed: {self.current_speed:.2f} km/h, Distance covered: {self.distance_covered:.2f} km")
+            time.sleep(1)  # Simulate time passing in seconds
+            if self.current_speed <= 0:
+                print("Train has stopped at the station.")
+                break
+
+    def cruise(self):
+        """Maintain the current speed, simulating cruising."""
+        print(f"Cruising at {self.current_speed} km/h...")
+
+    def run(self):
+        """Run the train between stations."""
+        print("Train is departing the station...")
+        self.accelerate()
+
+# Configuration for the metro train
+MAX_SPEED = 80  # Maximum speed of the train in km/h
+ACCELERATION_RATE = 5  # Train acceleration rate in km/h per second
+DECELERATION_RATE = 7  # Train deceleration rate in km/h per second
+
+# Create a MetroTrain object and run it
+metro_train = MetroTrain(MAX_SPEED, ACCELERATION_RATE, DECELERATION_RATE)
+metro_train.run()
