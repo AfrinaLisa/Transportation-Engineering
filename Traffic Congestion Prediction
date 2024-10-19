@@ -1,0 +1,51 @@
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report
+from sklearn.preprocessing import LabelEncoder
+
+# Create synthetic traffic data
+data = {
+    'vehicle_count': np.random.randint(50, 1000, size=1000),
+    'time_of_day': np.random.choice(['morning', 'afternoon', 'evening', 'night'], size=1000),
+    'day_of_week': np.random.choice(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], size=1000),
+    'weather': np.random.choice(['sunny', 'rainy', 'cloudy'], size=1000),
+    'road_type': np.random.choice(['highway', 'arterial', 'local'], size=1000),
+    'congestion_level': np.random.choice([0, 1], size=1000)  # 0: No congestion, 1: Congestion
+}
+
+# Convert to a DataFrame
+df = pd.DataFrame(data)
+
+# Display the first few rows of the dataset
+print(df.head())
+
+# Encode categorical features into numerical values
+label_encoders = {}
+for column in ['time_of_day', 'day_of_week', 'weather', 'road_type']:
+    label_encoders[column] = LabelEncoder()
+    df[column] = label_encoders[column].fit_transform(df[column])
+
+# Split data into features and target
+X = df.drop('congestion_level', axis=1)  # Features
+y = df['congestion_level']  # Target (congestion level)
+
+# Split the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Initialize and train the model (Random Forest Classifier)
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+
+# Make predictions on the test set
+y_pred = model.predict(X_test)
+
+# Evaluate the model
+accuracy = accuracy_score(y_test, y_pred)
+print(f"Accuracy: {accuracy * 100:.2f}%")
+
+# Print detailed classification report
+print("Classification Report:")
+print(classification_report(y_test, y_pred))
+
