@@ -1,0 +1,50 @@
+import time
+import random
+import paho.mqtt.client as mqtt
+
+# MQTT client setup to simulate receiving speed data from the train
+def on_connect(client, userdata, flags, rc):
+    print(f"Connected with result code {rc}")
+    client.subscribe("train/speed")
+
+def on_message(client, userdata, msg):
+    speed = float(msg.payload.decode())
+    print(f"Received speed: {speed} km/h")
+    
+    # Control logic
+    if speed > 80:
+        print("Speed exceeds limit. Sending command to slow down.")
+        send_control_command("slow_down")
+    elif speed < 30:
+        print("Speed too low. Sending command to speed up.")
+        send_control_command("speed_up")
+    else:
+        print("Speed is within optimal range.")
+
+def send_control_command(command):
+    # Send control command to the train
+    print(f"Sending command to train: {command}")
+    # This could be an MQTT message, serial communication, or an API call
+    # Example: client.publish("train/control", command)
+
+# MQTT setup
+client = mqtt.Client()
+client.on_connect = on_connect
+client.on_message = on_message
+
+# Connect to the MQTT broker
+client.connect("mqtt-broker-address", 1883, 60)
+
+# Simulate receiving speed data for demonstration purposes
+def simulate_speed_data():
+    while True:
+        # Simulating speed between 20 and 100 km/h
+        speed = random.uniform(20, 100)
+        client.publish("train/speed", speed)
+        time.sleep(2)
+
+# Start the MQTT client in a new thread
+client.loop_start()
+
+# Simulate train speed data publishing
+simulate_speed_data()
